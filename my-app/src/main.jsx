@@ -78,6 +78,7 @@ window.handleRegister = async function(e) {
     await setDoc(doc(db, 'users', user.uid), {
       email: email,
       department: department,
+      assignedSession: null,
       createdAt: new Date().toISOString(),
       allocations: {
         morning: false,
@@ -86,20 +87,21 @@ window.handleRegister = async function(e) {
       }
     });
 
-    // Initialize session data in Firestore for each session with department-based capacity
+    // Initialize shared session documents in Firestore
     const sessions = ['morning', 'midday', 'afternoon'];
-    const sessionCapacity = department === 'A' ? 8 : 6; // Division A: 8 seats, B/C: 6 seats
-    
+    const initialSession = {
+      capacity: 20,
+      allocated: [],
+      departmentTotals: { A: 0, B: 0, C: 0 },
+      departmentCapacities: { A: 8, B: 6, C: 6 },
+      createdAt: new Date().toISOString()
+    };
+
     for (const session of sessions) {
-      const sessionRef = doc(db, 'sessions', `${department}_${session}`);
+      const sessionRef = doc(db, 'sessions', session);
       const sessionDoc = await getDoc(sessionRef);
       if (!sessionDoc.exists()) {
-        await setDoc(sessionRef, {
-          capacity: sessionCapacity,
-          allocated: [],
-          department: department,
-          createdAt: new Date().toISOString()
-        });
+        await setDoc(sessionRef, initialSession);
       }
     }
 
@@ -174,7 +176,19 @@ window.allocateWorkers = async function(sessionKey) {
   const currentUser = JSON.parse(currentUserStr);
   
   try {
-    const sessionRef = doc(db, 'sessions', `${currentUser.department}_${sessionKey}`);
+    const userRef = doc(db, 'users', currentUser.uid);
+    const userDoc = await getDoc(userRef);
+    const userData = userDoc.exists() ? userDoc.data() : {};
+
+    if (userData.assignedSession) {
+      const msg = userData.assignedSession === sessionKey
+        ? 'You are already assigned to this session.'
+        : 'A participant can only be assigned to one session.';
+      alert(msg);
+      return;
+    }
+
+    const sessionRef = doc(db, 'sessions', sessionKey);
     const sessionDoc = await getDoc(sessionRef);
     
     if (!sessionDoc.exists()) {
@@ -183,27 +197,44 @@ window.allocateWorkers = async function(sessionKey) {
     }
 
     const sessionData = sessionDoc.data();
-    const capacity = sessionData.capacity;
+    const capacity = sessionData.capacity || 20;
     const allocated = sessionData.allocated || [];
+    const departmentTotals = sessionData.departmentTotals || { A: 0, B: 0, C: 0 };
+    const departmentCapacities = sessionData.departmentCapacities || { A: 8, B: 6, C: 6 };
+    const dept = currentUser.department;
 
-    // Check if user is already allocated
+    // Check if user is already allocated to this session
     if (allocated.includes(currentUser.email)) {
       alert('You are already allocated to this session');
       return;
     }
 
-    // Check capacity
+    // Check overall session capacity
     if (allocated.length >= capacity) {
-      alert('This session is full');
+      alert('This session is full. Maximum 20 participants allowed.');
+      return;
+    }
+
+    // Check department cap for this session
+    const deptTotal = departmentTotals[dept] || 0;
+    const deptCap = departmentCapacities[dept] || (dept === 'A' ? 8 : 6);
+    if (deptTotal >= deptCap) {
+      alert(`Department ${dept} has reached its per-session limit of ${deptCap} participants.`);
       return;
     }
 
     // Add user to session
-    allocated.push(currentUser.email);
-    await updateDoc(sessionRef, { allocated });
+    const updatedAllocated = [...allocated, currentUser.email];
+    const updatedTotals = { ...departmentTotals, [dept]: deptTotal + 1 };
+
+    await updateDoc(sessionRef, {
+      allocated: updatedAllocated,
+      departmentTotals: updatedTotals
+    });
 
     // Update user's allocation record
-    await updateDoc(doc(db, 'users', currentUser.uid), {
+    await updateDoc(userRef, {
+      assignedSession: sessionKey,
       [`allocations.${sessionKey}`]: true
     });
 
