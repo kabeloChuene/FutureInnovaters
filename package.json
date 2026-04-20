@@ -1,0 +1,10 @@
+{
+  "name": "futureinnovaters",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "cd my-app && npm run dev",
+    "build": "cd my-app && npm run build",
+    "preview": "cd my-app && npm run preview"
+  }
+}
