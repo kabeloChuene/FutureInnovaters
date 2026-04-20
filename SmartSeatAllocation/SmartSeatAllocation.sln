@@ -1,0 +1,30 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.8.0.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SmartSeatAllocation.Core", "SmartSeatAllocation.Core\SmartSeatAllocation.Core.csproj", "{B5E8F5E8-8F5E-4E5E-8F5E-8F5E8F5E8F5E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SmartSeatAllocation.API", "SmartSeatAllocation.API\SmartSeatAllocation.API.csproj", "{C7F9A8A8-9F8A-4F8A-9F8A-9F8A9F8A9F8A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SmartSeatAllocation.Tests", "SmartSeatAllocation.Tests\SmartSeatAllocation.Tests.csproj", "{D8G0B9B9-0G9B-5G9B-0G9B-0G9B0G9B0G9B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B5E8F5E8-8F5E-4E5E-8F5E-8F5E8F5E8F5E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B5E8F5E8-8F5E-4E5E-8F5E-8F5E8F5E8F5E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B5E8F5E8-8F5E-4E5E-8F5E-8F5E8F5E8F5E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B5E8F5E8-8F5E-4E5E-8F5E-8F5E8F5E8F5E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C7F9A8A8-9F8A-4F8A-9F8A-9F8A9F8A9F8A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C7F9A8A8-9F8A-4F8A-9F8A-9F8A9F8A9F8A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C7F9A8A8-9F8A-4F8A-9F8A-9F8A9F8A9F8A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C7F9A8A8-9F8A-4F8A-9F8A-9F8A9F8A9F8A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D8G0B9B9-0G9B-5G9B-0G9B-0G9B0G9B0G9B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D8G0B9B9-0G9B-5G9B-0G9B-0G9B0G9B0G9B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D8G0B9B9-0G9B-5G9B-0G9B-0G9B0G9B0G9B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D8G0B9B9-0G9B-5G9B-0G9B-0G9B0G9B0G9B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
