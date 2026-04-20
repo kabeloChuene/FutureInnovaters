@@ -8,9 +8,9 @@
   --bg: #fff;
   --border: #e5e4e7;
   --code-bg: #f4f3ec;
-  --accent: #3b90ff;
-  --accent-bg: rgba(59, 111, 255, 0.1);
-  --accent-border: rgba(59, 141, 255, 0.5);
+  --accent: #aa3bff;
+  --accent-bg: rgba(170, 59, 255, 0.1);
+  --accent-border: rgba(170, 59, 255, 0.5);
   --social-bg: rgba(244, 243, 236, 0.5);
   --shadow: rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
   --sans: system-ui, 'Segoe UI', Roboto, sans-serif;
@@ -528,106 +528,6 @@ code {
     padding: 14px 20px;
   }
 }
-.sessions {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 16px;
-  padding: 20px;
-}
-
-.session-card {
-  background: var(--social-bg);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 16px;
-  text-align: left;
-  box-shadow: var(--shadow);
-  transition: transform 0.2s ease;
-}
-
-.session-card:hover {
-  transform: translateY(-3px);
-}
-
-.session-card h2 {
-  margin-bottom: 10px;
-}
-
-.departments {
-  margin-top: 10px;
-  padding-top: 10px;
-  border-top: 1px solid var(--border);
-}
-
-.status-upcoming {
-  color: #3b82f6;
-  font-weight: 600;
-}
-
-.status-in-progress {
-  color: #f59e0b;
-  font-weight: 600;
-}
-
-.status-completed {
-  color: #10b981;
-  font-weight: 600;
-}
-
-.status-full {
-  color: #ef4444;
-  font-weight: 600;
-}
-
-.status-available {
-  color: #22c55e;
-  font-weight: 600;
-}
-
-/* CREATE SESSION FORM */
-.create-session {
-  margin: 20px;
-  padding: 16px;
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  background: var(--code-bg);
-  text-align: left;
-}
-
-.create-session input,
-.create-session textarea,
-.create-session select {
-  width: 100%;
-  margin: 6px 0;
-  padding: 8px;
-  border-radius: 6px;
-  border: 1px solid var(--border);
-  font-family: var(--sans);
-}
-
-.create-session button {
-  margin-top: 10px;
-  padding: 10px 14px;
-  border: none;
-  border-radius: 8px;
-  background: var(--accent);
-  color: white;
-  cursor: pointer;
-  font-weight: 600;
-}
-
-.create-session button:hover {
-  opacity: 0.9;
-}
-
-/* FEEDBACK */
-.feedback {
-  margin: 20px;
-  padding: 12px;
-  border-left: 4px solid var(--accent);
-  background: var(--accent-bg);
-  text-align: left;
-}
 
 .session-card button {
   width: 100%;
@@ -644,4 +544,81 @@ code {
 
 .session-card button:hover {
   background: #1d4ed8; /* darker blue on hover */
+}
+
+.session-card button:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.dashboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.dashboard-header h1 {
+  margin: 0;
+}
+
+.logout-btn {
+  padding: 10px 20px;
+  background: #ef4444;
+  color: white;
+  border: 1px solid #dc2626;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: 0.2s ease;
+}
+
+.logout-btn:hover {
+  background: #dc2626;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.department-badge {
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-weight: 600;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.dept-a {
+  background: linear-gradient(135deg, #1e40af, #3b82f6);
+  color: white;
+}
+
+.dept-b {
+  background: linear-gradient(135deg, #059669, #10b981);
+  color: white;
+}
+
+.dept-c {
+  background: linear-gradient(135deg, #dc2626, #ef4444);
+  color: white;
+}
+
+.session-capacity {
+  margin-bottom: 12px;
+}
+
+.capacity-badge {
+  display: inline-block;
+  padding: 4px 12px;
+  background: #f3f4f6;
+  color: #374151;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 600;
+  border: 1px solid #d1d5db;
 }

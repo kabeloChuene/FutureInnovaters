@@ -6,5 +6,8 @@
     "dev": "cd my-app && npm run dev",
     "build": "cd my-app && npm run build",
     "preview": "cd my-app && npm run preview"
+  },
+  "dependencies": {
+    "firebase": "^12.12.0"
   }
 }
