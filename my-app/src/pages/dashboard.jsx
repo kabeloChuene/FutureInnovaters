@@ -1,73 +1,50 @@
 export function dashboardPage(sessions = {}) {
   return `
 <section class="route-shell">
-  <nav class="route-nav">
-    <a href="#/">Home</a>
-    <a href="#/dashboard">Dashboard</a>
-    <a href="#/login">Login</a>
-    <a href="#/registration">Register</a>
-  </nav>
 
   <section class="route-content">
-    <h1>Smart Seat Allocation Dashboard</h1>
+    <h1>Smart Seat Allocation</h1>
 
-    <!-- SESSION CREATION -->
-    <div class="create-session">
-      <h2>Create Session</h2>
+    <div class="session-grid">
 
-      <input id="sessionName" placeholder="Session name" />
-      <input id="sessionTime" placeholder="Time slot (e.g. 09:00 - 10:30)" />
+      ${["morning", "midday", "afternoon"].map((key) => {
+        const session = sessions[key] || {
+          name: "",
+          assigned: [],
+          capacity: 8
+        };
 
-      <select id="sessionStage">
-        <option value="upcoming">Upcoming</option>
-        <option value="in-progress">In Progress</option>
-        <option value="completed">Completed</option>
-      </select>
+        const remaining = session.capacity - session.assigned.length;
 
-      <textarea id="sessionDesc" placeholder="Short description (optional)"></textarea>
-
-      <button onclick="createSession()">Create Session</button>
-    </div>
-
-    <hr/>
-
-    <!-- SESSIONS DISPLAY -->
-    <div class="sessions">
-
-      ${Object.entries(sessions).map(([key, session]) => {
-        const totalAssigned = session.assigned.length;
-        const remaining = session.capacity - totalAssigned;
+        const titles = {
+          morning: "Morning Session 09:00 - 10:30",
+          midday: "Midday Session 11:00 - 12:30",
+          afternoon: "Afternoon Session 13:00 - 14:30"
+        };
 
         return `
         <div class="session-card">
-          <h2>${session.name || key.toUpperCase()}</h2>
 
-          ${session.description ? `<p><strong>Description:</strong> ${session.description}</p>` : ''}
+          <h2>${titles[key]}</h2>
 
-          <p><strong>Time:</strong> ${session.time}</p>
+          <p><strong>Members:</strong> ${session.assigned.length} / ${session.capacity}</p>
+          <p><strong>Seats Left:</strong> ${remaining}</p>
 
-          <p>
-            <strong>Status:</strong> 
-            <span class="status-${session.stage}">
-              ${session.stage.replace("-", " ").toUpperCase()}
-            </span>
-          </p>
-
-          <p><strong>Members Inside:</strong> ${totalAssigned}</p>
-          <p><strong>Seats Left:</strong> ${remaining} / ${session.capacity}</p>
-
-          <div class="departments">
-            <p><strong>Division A:</strong> ${session.departments.A} / 8</p>
-            <p><strong>Division B:</strong> ${session.departments.B} / 8</p>
-            <p><strong>Division C:</strong> ${session.departments.C} / 6</p>
+          <div class="worker-list">
+            ${
+              session.assigned.length
+                ? session.assigned.map(w => `<span class="worker">${w}</span>`).join("")
+                : "<p>No workers assigned</p>"
+            }
           </div>
 
-          <p class="${remaining === 0 ? 'status-full' : 'status-available'}">
-            ${remaining === 0 ? 'Session Full' : 'Seats Available'}
-          </p>
+          <button onclick="allocateWorkers('${key}')">
+            Allocate Workers
+          </button>
+
         </div>
         `;
-      }).join('')}
+      }).join("")}
 
     </div>
 
@@ -77,5 +54,5 @@ export function dashboardPage(sessions = {}) {
 
   </section>
 </section>
-`
+`;
 }
