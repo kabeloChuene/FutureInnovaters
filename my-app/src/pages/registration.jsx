@@ -73,7 +73,7 @@ export function registrationPage() {
             <select class="form-input form-select" id="reg-department" name="department" required>
               <option value="" disabled selected>Select your department</option>
               <option value="A">Division A — 24 participants, 8 max/session</option>
-              <option value="B">Division B — 18 participants, 8 max/session</option>
+              <option value="B">Division B — 18 participants, 6 max/session</option>
               <option value="C">Division C — 18 participants, 6 max/session</option>
             </select>
           </div>
